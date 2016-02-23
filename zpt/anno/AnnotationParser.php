@@ -21,7 +21,7 @@ namespace zpt\anno;
  */
 class AnnotationParser {
 
-	const ANNOTATION_REGEX = '/@(\w+)(?:\s*(?:\(\s*)?(.*?)(?:\s*\))?)??\s*(?:\n|\*\/)/';
+	const ANNOTATION_REGEX = '/@([a-zA-Z0-9_\\\]+)(?:\s*(?:\(\s*)?(.*?)(?:\s*\))?)??\s*(?:\n|\*\/)/';
 	const PARAMETER_REGEX = '/(\w+)\s*=\s*(\[[^\]]*\]|"[^"]*"|[^,)]*)\s*(?:,|$)/';
 
 	/**
