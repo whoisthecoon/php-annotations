@@ -27,7 +27,7 @@ class AnnotationParser {
 	/**
 	 * Parse any annotations from the given doc comment and return them in an
 	 * array structure.  The annotations in the returned array are indexed by
-	 * their lowercased name.  Parameters with a value defined as a comma
+	 * their name.  Parameters with a value defined as a comma
 	 * separated list contained in braces will be return as arrays.  Parameter
 	 * values defined in quotes will have the quotes stripped and the inner value
 	 * parsed for boolean and numeric values.  If not a boolean or numeric value,
@@ -51,7 +51,7 @@ class AnnotationParser {
 
 		$annotations = array();
 		foreach ($matches AS $anno) {
-			$annoName = strtolower($anno[1]);
+			$annoName = $anno[1];
 
 			$val = true;
 			if (isset($anno[2])) {
