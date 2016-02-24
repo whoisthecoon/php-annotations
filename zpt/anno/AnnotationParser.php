@@ -21,7 +21,8 @@ namespace zpt\anno;
  */
 class AnnotationParser {
 
-	const ANNOTATION_REGEX = '/@([a-zA-Z0-9_\\\]+)(?:\s*(?:\(\s*)?(.*?)(?:\s*\))?)??\s*(?:\n|\*\/)/';
+	// const ANNOTATION_REGEX = '/@([a-zA-Z0-9_\\\\]+)(?:\s*(?:\(\s*)?(.*?)(?:\s*\))?)??\s*(?:\n|\*\/)/';
+	const ANNOTATION_REGEX = '/@([a-zA-Z0-9_\\\\]+)\\((?:\\s*(?:\\(\\s*)?(.*?)(?:\\s*\\))?)??\\s*\\)/';
 	const PARAMETER_REGEX = '/(\w+)\s*=\s*(\[[^\]]*\]|"[^"]*"|[^,)]*)\s*(?:,|$)/';
 
 	/**
@@ -38,6 +39,19 @@ class AnnotationParser {
 	 * @return array Array containing the defined annotations.
 	 */
 	public static function getAnnotations($docComment) {
+
+		$docComment = str_replace("\r\n", "\n", substr($docComment, 2, -2));
+
+		$lines = array_map("trim", explode("\n", $docComment));
+		$lines = array_map(function($line) {
+			return trim(substr($line, 2));
+		}, $lines);
+		$lines = array_filter($lines, function ($line) {
+			return strlen($line) > 0;
+		});
+
+		$docComment = implode('', $lines);
+
 		$hasAnnotations = preg_match_all(
 			self::ANNOTATION_REGEX,
 			$docComment,
